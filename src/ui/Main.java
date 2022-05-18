@@ -18,10 +18,10 @@ public class Main {
     /**
      * Método:      menu
      * Descripción  Método que se permite desplegar un menú con las opciones de generar el password
-     * @throws IOException
+     * @throws IOException  Excepcion
      */
     public static void menu() throws IOException {
-        boolean salir = false;
+        boolean salir;
         String menu = "GENERAR PASSWORD\n" +
                 "1. Longitud default (8)\n" +
                 "2. Definir la longitud\n" +
@@ -33,10 +33,11 @@ public class Main {
         } while (!salir);
     }
     /**
-     * función que ejecuta la opción elegida del menú
-     * @param opcion
-     * @return
-     * @throws IOException
+     * Método           procesar_menu
+     * Descripción      Método que permite ejecutar las opciones elegida del menú
+     * @param opcion    Variable de tipo int escogida por el usuario
+     * @return          Variable de tipo boolean que retorna false si continúa en el menú o true si finaliza
+     * @throws IOException  Excepción
      */
     private static boolean procesar_menu(int opcion) throws IOException {
         boolean salir = false;
@@ -60,10 +61,9 @@ public class Main {
     /**
      * Método:      generarPassword
      * Descripción  Método que permite solicitar un password con tamaño default.
-     * @throws IOException
      */
     private static void generarPasswordDefault(){
-        String [] password = new String[2];
+        String [] password;
         password = gestor.generarPassword();
         printArray(password);
     }
@@ -71,10 +71,10 @@ public class Main {
     /**
      * Método:      generarPassword
      * Descripción  Método que permite solicitar un password con el tamaño definido por el usuario.
-     * @throws IOException
+     * @throws IOException Excepción
      */
     private static void generarPassword() throws IOException {
-        int largo = 0;
+        int largo;
         boolean salir = false;
         do {
             largo = ingresar_int("Ingrese la longitud del password");
@@ -95,9 +95,9 @@ public class Main {
      * @param array Arreglo de números
      */
     private static void printArray(String [] array) {
-        String txt = "| ";
-        for (int i = 0; i < array.length; i++) {
-            txt = txt +  array[i] + " | ";
+        StringBuilder txt = new StringBuilder("| ");
+        for (String s : array) {
+            txt.append(s).append(" | ");
         }
         out.println("Password: " + array[0]);
         out.println("El password generado es: " + array[1] + "\n\n");
@@ -107,13 +107,13 @@ public class Main {
      * Descripción  Método que permite el ingreso de valores de tipo int
      * @param msg   Variable de tipo String que contiene el mensaje enviado al usuario
      * @return      Variable de tipo int que representa el número que se ingresó por teclado
-     * @throws IOException
+     * @throws IOException Excepción
      */
     private static int ingresar_int(String msg) throws IOException {
         String respuesta = "La número ingresado no es válida, debe intentarlo nuevamente.\n";
-        String valor = "";
+        String valor;
         int num = 0;
-        boolean salir = false, validacion = false;
+        boolean salir = false, validacion;
         do {
             out.println(msg);
             valor = in.readLine();
@@ -124,7 +124,7 @@ public class Main {
             } else {
                 out.print(respuesta);
             }
-        } while (salir == false);
+        } while (!salir);
         return num;
     }
 
@@ -132,10 +132,10 @@ public class Main {
      * Método:      esIntValido
      * Descripción  Método que permite validar si el valor ingresado en un número
      * @param valor Variable de tipo boolean que representa si el valor es un int (true) o no (false)
-     * @return
+     * @return      Excepción
      */
     private static boolean esIntValido(String valor) {
-        boolean respuesta = false;
+        boolean respuesta;
         try {
             Integer.parseInt(valor);
             respuesta = true;
@@ -154,11 +154,12 @@ public class Main {
      *              valor seńalado como techo (true) o es superior (false)
      */
     private static boolean validarValorTecho(int num) {
+//        if (num > techo) {
+//            return false;
+//        }
+//        return true;
         int techo = 30;
-        if (num > techo) {
-            return false;
-        }
-        return true;
+        return num <= techo;
     }
     /**
      * Método:      validarValorPiso
@@ -170,9 +171,6 @@ public class Main {
      */
     private static boolean validarValorPiso(int num) {
         int piso = 8;
-        if (num < piso) {
-            return false;
-        }
-        return true;
+        return num >= piso;
     }
 }
